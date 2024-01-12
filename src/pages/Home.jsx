@@ -71,7 +71,7 @@ function Home() {
 			<h2 className="content__title">Products:</h2>
 			<div className="content__items">
 				{loading === 'loading' ? (
-					[...new Array(6)].map((elem, index) => <Skeleton key={index} />)
+					[...new Array(productsPerPage)].map((elem, index) => <Skeleton key={index} />)
 				) : loading === 'error' ? (
 					<p>Error! Try to refresh!</p>
 				) : (
