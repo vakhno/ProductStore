@@ -58,6 +58,7 @@ function Home() {
 	}, [categoryId, sortType, searchValue, productsPerPage, activePage]);
 
 	const handleChangeCategory = (value) => {
+		dispatch(setActivePage(1));
 		dispatch(setCategory(value));
 	};
 
