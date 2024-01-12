@@ -1,0 +1,14 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	padding: 40px 0;
+
+	span {
+		font-size: 64px;
+	}
+}
+
+.description {
+	font-size: 22px;
+}

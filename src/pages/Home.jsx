@@ -6,6 +6,7 @@ import Sort from '../components/Sort';
 import ProductsPerPage from '../components/ProductsPerPage';
 import Categories from '../components/Categories';
 import ProductCard from '../components/ProductCard';
+import LoadingError from '../components/LoadingError';
 import Skeleton from '../components/ProductCard/Skeleton';
 import { fetchData } from '../redux/slices/dataSlice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -68,13 +69,14 @@ function Home() {
 				<ProductsPerPage />
 			</div>
 			<h2 className="content__title">Products:</h2>
-			<div className="content__items">
-				{loading === 'loading' ? (
-					[...new Array(productsPerPage)].map((elem, index) => <Skeleton key={index} />)
-				) : loading === 'error' ? (
-					<p>Error! Try to refresh!</p>
-				) : (
-					data.map((product) => (
+
+			{loading === 'loading' ? (
+				[...new Array(productsPerPage)].map((elem, index) => <Skeleton key={index} />)
+			) : loading === 'error' ? (
+				<LoadingError />
+			) : (
+				<div className="content__items">
+					{data.map((product) => (
 						<Link to={`product/${product.id}`} key={product.id}>
 							<ProductCard
 								key={product.id}
@@ -86,9 +88,9 @@ function Home() {
 								switchers2={product.toggle2}
 							/>
 						</Link>
-					))
-				)}
-			</div>
+					))}
+				</div>
+			)}
 			<Pagination
 				pages={allPages}
 				activePage={activePage}
