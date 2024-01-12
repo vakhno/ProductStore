@@ -20,9 +20,9 @@ function CartItem({
 }) {
 	const dispatch = useDispatch();
 	const selected1ToggleTitle =
-		switchers1.length && switchers1.find((switcher) => switcher.num === toggle1).title;
+		(switchers1.length && switchers1.find((switcher) => switcher.num === toggle1).title) || '';
 	const selected2ToggleTitle =
-		switchers2.length && switchers2.find((switcher) => switcher.num === toggle2).title;
+		(switchers2.length && switchers2.find((switcher) => switcher.num === toggle2).title) || '';
 	const selected1TogglePtice =
 		switchers1.length && switchers1.find((switcher) => switcher.num === toggle1).extraPrice;
 	const selected2TogglePrice =
