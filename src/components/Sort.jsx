@@ -7,7 +7,6 @@ function Sort() {
 	const dispatch = useDispatch();
 	const sortRef = useRef();
 	const [isVisibleSort, setIsVisibleSort] = useState(false);
-	// const [selectedSort, setSelectedSort] = useState('popularity');
 
 	const sortList = [
 		{ title: 'rating 🠕', value: 'rating' },

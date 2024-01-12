@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import Search from '../components/Search';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 function Header() {
 	const { items, totalPrice } = useSelector((state) => state.cart);
-	const location = useLocation();
-	console.log(location);
+
 	return (
 		<div className="header">
 			<div className="container">

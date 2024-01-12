@@ -62,7 +62,6 @@ export const cartSlice = createSlice({
 			}
 		},
 		decrementProduct: (state, action) => {
-			console.log('decrementProduct', action);
 			const sameItem = state.items.find(
 				(item) =>
 					item.id === action.payload.id &&
@@ -86,7 +85,6 @@ export const cartSlice = createSlice({
 			}
 		},
 		removeProductFromCart: (state, action) => {
-			console.log('removeProductFromCart', action);
 			const sameItem = state.items.find(
 				(item) =>
 					item.id === action.payload.id &&

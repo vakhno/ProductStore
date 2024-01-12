@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import plus from '../../assets/img/plus.svg';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
 	removeProductFromCart,
 	incrementProduct,

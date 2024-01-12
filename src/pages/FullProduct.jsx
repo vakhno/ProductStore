@@ -13,7 +13,6 @@ function FullProduct() {
 					`https://6579f84c1acd268f9afa80e7.mockapi.io/products/${id}`,
 				);
 				setProduct(data);
-				console.log('data', data);
 			} catch (error) {
 				console.log('error', error);
 			}

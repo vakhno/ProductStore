@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useNavigate, Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
@@ -28,7 +28,6 @@ function Home() {
 	useEffect(() => {
 		if (window.location.search) {
 			const params = qs.parse(window.location.search.substring(1));
-			console.log('params', params);
 			dispatch(
 				setFilters({
 					category: params.categoryId,
