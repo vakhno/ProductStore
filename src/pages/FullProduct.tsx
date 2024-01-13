@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-function FullProduct() {
-	const [product, setProduct] = useState();
+const FullProduct: React.FC = () => {
+	const [product, setProduct] = useState<{
+		imageUrl: string;
+		name: string;
+		price: number;
+	}>();
 	const { id } = useParams();
 
 	useEffect(() => {
@@ -23,7 +27,7 @@ function FullProduct() {
 		<div>
 			{product && (
 				<>
-					<img src={product.imageUrl} />
+					<img src={product.imageUrl} alt="product" />
 					<h2>{product.name}</h2>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt at in impedit incidunt
 					eos earum tempora consectetur velit rem nihil minus tenetur suscipit molestiae, voluptates
@@ -32,6 +36,6 @@ function FullProduct() {
 			)}
 		</div>
 	);
-}
+};
 
 export default FullProduct;

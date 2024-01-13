@@ -1,41 +1,62 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addProductToCart } from '../../redux/slices/cartSlice';
+import { addProductToCart } from '../../redux/slices/cartSlice.ts';
+import { RootState } from '../../redux/store.ts';
 
-function ProductCard({
+type ProductCardProps = {
+	id: string;
+	title: string;
+	price: number;
+	image: string;
+	toggle1: { num: number; title: string; extraPrice: number; disabled: boolean }[];
+	toggle2: { num: number; title: string; extraPrice: number; disabled: boolean }[];
+};
+
+const ProductCard: React.FC<ProductCardProps> = ({
 	id = '',
 	title = '',
 	price = 0,
 	image = '',
-	switchers1 = [],
-	switchers2 = [],
-}) {
+	toggle1 = [],
+	toggle2 = [],
+}) => {
 	const dispatch = useDispatch();
 	const count =
-		useSelector((state) =>
+		useSelector((state: RootState) =>
 			state.cart.items.reduce((sum, item) => (sum += item.id === id ? item.count : 0), 0),
 		) || 0;
 	const [activeToggle1, setActiveToggle1] = useState(
-		switchers1.length && switchers1.find((toggle) => !toggle.disabled).num,
+		(toggle1.length && toggle1.find((toggle) => !toggle.disabled)?.num) || 0,
 	);
 	const [activeToggle2, setActiveToggle2] = useState(
-		switchers2.length && switchers2.find((toggle) => !toggle.disabled).num,
+		(toggle2.length && toggle2.find((toggle) => !toggle.disabled)?.num) || 0,
 	);
 
-	const selected1TogglePtice =
-		switchers1.length && switchers1.find((toggle) => toggle.num === activeToggle1).extraPrice;
-	const selected2TogglePtice =
-		switchers2.length && switchers2.find((toggle) => toggle.num === activeToggle2).extraPrice;
+	const selected1TogglePrice =
+		(toggle1.length && toggle1.find((toggle) => toggle.num === activeToggle1)?.extraPrice) || 0;
+	const selected2TogglePrice =
+		(toggle2.length && toggle2.find((toggle) => toggle.num === activeToggle2)?.extraPrice) || 0;
 
 	const onAddHandleClick = (e) => {
 		e.preventDefault();
-		const item = {
+		const item: {
+			id: string;
+			title: string;
+			price: number;
+			count: number;
+			image: string;
+			toggle1: { num: number; title: string; extraPrice: number; disabled: boolean }[];
+			toggle2: { num: number; title: string; extraPrice: number; disabled: boolean }[];
+			activeToggle1: number;
+			activeToggle2: number;
+		} = {
 			id,
 			title,
 			price,
 			image,
-			switchers1,
-			switchers2,
+			count,
+			toggle1,
+			toggle2,
 			activeToggle1,
 			activeToggle2,
 		};
@@ -59,8 +80,8 @@ function ProductCard({
 				<h4 className="pizza-block__title">{title}</h4>
 				<div className="pizza-block__selector">
 					<ul>
-						{switchers1.length
-							? switchers1.map((toggle) => (
+						{toggle1.length
+							? toggle1.map((toggle) => (
 									<li
 										key={toggle.num}
 										onClick={(e) => onToggle1HandleClick(e, toggle)}
@@ -71,8 +92,8 @@ function ProductCard({
 							: null}
 					</ul>
 					<ul>
-						{switchers2.length
-							? switchers2.map((toggle) => (
+						{toggle2.length
+							? toggle2.map((toggle) => (
 									<li
 										key={toggle.num}
 										onClick={(e) => onToggle2HandleClick(e, toggle)}
@@ -85,7 +106,7 @@ function ProductCard({
 				</div>
 				<div className="pizza-block__bottom">
 					<div className="pizza-block__price">
-						from {price + selected1TogglePtice + selected2TogglePtice} $
+						from {price + selected1TogglePrice + selected2TogglePrice} $
 					</div>
 					<button onClick={onAddHandleClick} className="button button--outline button--add">
 						<svg
@@ -106,6 +127,6 @@ function ProductCard({
 			</div>
 		</div>
 	);
-}
+};
 
 export default ProductCard;

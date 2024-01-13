@@ -1,13 +1,13 @@
 import React from 'react';
 import './scss/app.scss';
-import Header from './components/Header';
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
-import Cart from './pages/Cart';
+import Header from './components/Header.tsx';
+import Home from './pages/Home.tsx';
+import NotFound from './pages/NotFound.tsx';
+import Cart from './pages/Cart.tsx';
 import { Routes, Route } from 'react-router-dom';
-import FullProduct from './pages/FullProduct';
+import FullProduct from './pages/FullProduct.tsx';
 
-function App() {
+const App: React.FC = () => {
 	return (
 		<div className="wrapper">
 			<Header />
@@ -21,6 +21,6 @@ function App() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default App;

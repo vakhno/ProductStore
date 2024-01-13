@@ -1,7 +1,27 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const initialState = {
+type Product = {
+	id: string;
+	name: string;
+	price: number;
+	imageUrl: string;
+	category: string;
+	rating: number;
+	popular: boolean;
+	toggle1: { num: number; title: string; disabled: boolean; extraPrice: number }[];
+	toggle2: { num: number; title: string; disabled: boolean; extraPrice: number }[];
+};
+
+interface FetchDataState {
+	data: Product[];
+	pageCount: number;
+	activePage: number;
+	productsPerPage: number;
+	loading: 'loading' | 'success' | 'error';
+}
+
+const initialState: FetchDataState = {
 	data: [],
 	pageCount: 0,
 	activePage: 1,
@@ -11,6 +31,7 @@ const initialState = {
 
 export const fetchData = createAsyncThunk(
 	'data/fetchData',
+	// @ts-ignore
 	async ({ categoryId, sortType, searchValue, productsPerPage, activePage }) => {
 		const url = 'https://6579f84c1acd268f9afa80e7.mockapi.io/products';
 		const category = categoryId ? `?category=${categoryId}` : '';
@@ -27,6 +48,7 @@ export const fetchData = createAsyncThunk(
 
 export const fetchPageCount = createAsyncThunk(
 	'data/fetchPageCount',
+	// @ts-ignore
 	async ({ categoryId, sortType, searchValue, productsPerPage }) => {
 		const url = 'https://6579f84c1acd268f9afa80e7.mockapi.io/products';
 		const category = categoryId ? `?category=${categoryId}` : '';
@@ -46,7 +68,7 @@ export const dataSlice = createSlice({
 		setData: (state, action) => {
 			state.data = action.payload;
 		},
-		setProductsPerPage: (state, action) => {
+		setProductsPerPage: (state, action: PayloadAction<number>) => {
 			state.activePage = 1;
 			state.productsPerPage = action.payload
 				? action.payload > 999

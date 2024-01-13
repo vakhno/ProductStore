@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setProductsPerPage } from '../../redux/slices/dataSlice';
+import { setProductsPerPage } from '../../redux/slices/dataSlice.ts';
 import debounce from 'lodash.debounce';
+import { RootState } from '../../redux/store.ts';
 
 function ProductsPerPage() {
 	const dispatch = useDispatch();
-	const [localProductsPerPage, setLocalProductsPerPage] = useState('');
-	const productsPerPage = useSelector((state) => state.data.productsPerPage);
+	const [localProductsPerPage, setLocalProductsPerPage] = useState(0);
+	const productsPerPage = useSelector((state: RootState) => state.data.productsPerPage);
 
 	const debounceEvent = useCallback(
 		debounce((value) => {

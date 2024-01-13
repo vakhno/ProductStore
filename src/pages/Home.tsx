@@ -1,30 +1,31 @@
 import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useNavigate, Link } from 'react-router-dom';
-import Pagination from '../components/Pagination';
-import Sort from '../components/Sort';
-import ProductsPerPage from '../components/ProductsPerPage';
-import Categories from '../components/Categories';
-import ProductCard from '../components/ProductCard';
-import LoadingError from '../components/LoadingError';
-import Skeleton from '../components/ProductCard/Skeleton';
-import { fetchData } from '../redux/slices/dataSlice';
+import Pagination from '../components/Pagination/Pagination.tsx';
+import Sort from '../components/Sort.tsx';
+import ProductsPerPage from '../components/ProductsPerPage/ProductsPerPage.tsx';
+import Categories from '../components/Categories.tsx';
+import ProductCard from '../components/ProductCard/ProductCard.tsx';
+import LoadingError from '../components/LoadingError/LoadingError.tsx';
+import Skeleton from '../components/ProductCard/Skeleton.jsx';
+import { fetchData } from '../redux/slices/dataSlice.ts';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategory, setFilters } from '../redux/slices/filterSlice';
-import { fetchPageCount, setActivePage } from '../redux/slices/dataSlice';
+import { setCategory, setFilters } from '../redux/slices/filterSlice.ts';
+import { fetchPageCount, setActivePage } from '../redux/slices/dataSlice.ts';
+import { RootState } from '../redux/store.ts';
 
 function Home() {
 	const isSearch = useRef(false);
 	const isMounted = useRef(false);
-	const categoryId = useSelector((state) => state.filter.category);
-	const sortType = useSelector((state) => state.filter.sort);
-	const allPages = useSelector((state) => state.data.pageCount);
-	const searchValue = useSelector((state) => state.filter.searchValue);
-	const productsPerPage = useSelector((state) => state.data.productsPerPage);
-	const activePage = useSelector((state) => state.data.activePage);
+	const categoryId = useSelector((state: RootState) => state.filter.category);
+	const sortType = useSelector((state: RootState) => state.filter.sort);
+	const allPages = useSelector((state: RootState) => state.data.pageCount);
+	const searchValue = useSelector((state: RootState) => state.filter.searchValue);
+	const productsPerPage = useSelector((state: RootState) => state.data.productsPerPage);
+	const activePage = useSelector((state: RootState) => state.data.activePage);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { data, loading } = useSelector((state) => state.data);
+	const { data, loading } = useSelector((state: RootState) => state.data);
 
 	useEffect(() => {
 		if (window.location.search) {
@@ -42,7 +43,9 @@ function Home() {
 
 	useEffect(() => {
 		if (!isSearch.current) {
+			// @ts-ignore
 			dispatch(fetchPageCount({ categoryId, sortType, searchValue, productsPerPage, activePage }));
+			// @ts-ignore
 			dispatch(fetchData({ categoryId, sortType, searchValue, productsPerPage, activePage }));
 			window.scrollTo(0, 0);
 		}
@@ -57,7 +60,7 @@ function Home() {
 		isMounted.current = true;
 	}, [categoryId, sortType, searchValue, productsPerPage, activePage]);
 
-	const handleChangeCategory = (value) => {
+	const handleChangeCategory = (value: string) => {
 		dispatch(setActivePage(1));
 		dispatch(setCategory(value));
 	};
@@ -85,8 +88,8 @@ function Home() {
 								title={product.name}
 								price={product.price}
 								image={product.imageUrl}
-								switchers1={product.toggle1}
-								switchers2={product.toggle2}
+								toggle1={product.toggle1}
+								toggle2={product.toggle2}
 							/>
 						</Link>
 					))}
@@ -95,7 +98,7 @@ function Home() {
 			<Pagination
 				pages={allPages}
 				activePage={activePage}
-				onChangePage={(page) => dispatch(setActivePage(page))}
+				onChangePage={(page: number) => dispatch(setActivePage(page))}
 			/>
 		</div>
 	);

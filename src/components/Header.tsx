@@ -1,12 +1,15 @@
 import React from 'react';
 import logoSvg from '../assets/img/cart-logo.svg';
 import { Link } from 'react-router-dom';
-import Search from '../components/Search';
+import Search from './Search/Search.tsx';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { RootState } from '../redux/store.ts';
 
-function Header() {
-	const { items, totalPrice } = useSelector((state) => state.cart);
+const Header: React.FC = () => {
+	const { items, totalPrice } = useSelector((state: RootState) => state.cart);
+	const totalCount = items.reduce((sum: number, item: any) => {
+		return sum + item.count;
+	}, 0);
 
 	return (
 		<div className="header">
@@ -53,16 +56,12 @@ function Header() {
 								strokeLinejoin="round"
 							/>
 						</svg>
-						<span>
-							{items.reduce((sum, item) => {
-								return sum + item.count;
-							}, 0)}
-						</span>
+						<span>{totalCount}</span>
 					</Link>
 				</div>
 			</div>
 		</div>
 	);
-}
+};
 
 export default Header;

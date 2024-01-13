@@ -1,9 +1,9 @@
 import React from 'react';
 import emptyCart from '../../assets/img/cart-empty-cart.png';
 
-function EmptyCart() {
+const EmptyCart: React.FC = () => {
 	return (
-		<div class="cart cart--empty">
+		<div className="cart cart--empty">
 			<h2>
 				Cart is empty <span>😕</span>
 			</h2>
@@ -13,11 +13,11 @@ function EmptyCart() {
 				To select products you should go to home page!
 			</p>
 			<img src={emptyCart} alt="Empty cart" />
-			<a class="button button--black" href="/">
+			<a className="button button--black" href="/">
 				<span>Go to home page</span>
 			</a>
 		</div>
 	);
-}
+};
 
 export default EmptyCart;

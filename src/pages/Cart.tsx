@@ -1,15 +1,16 @@
 import React from 'react';
-import CartItem from '../components/CartItem';
+import CartItem from '../components/CartItem/CartItem.tsx';
 import trash from '../assets/img/trash.svg';
 import arrowLeft from '../assets/img/grey-arrow-left.svg';
-import EmptyCart from '../components/EmptyCart';
+import EmptyCart from '../components/EmptyCart/EmptyCart.tsx';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCart } from '../redux/slices/cartSlice';
+import { clearCart } from '../redux/slices/cartSlice.ts';
+import { RootState } from '../redux/store.ts';
 
 function Cart() {
 	const dispatch = useDispatch();
-	const { items, totalPrice, totalQuantity } = useSelector((state) => state.cart);
+	const { items, totalPrice, totalQuantity } = useSelector((state: RootState) => state.cart);
 
 	return (
 		<div className="container container--cart">
@@ -30,14 +31,14 @@ function Cart() {
 									<CartItem
 										key={item.id}
 										id={item.id}
-										title={item.name}
+										title={item.title}
 										price={item.price}
 										count={item.count}
 										image={item.image}
-										toggle1={item.activeToggle1}
-										toggle2={item.activeToggle2}
-										switchers1={item.switchers1}
-										switchers2={item.switchers2}
+										toggle1={item.toggle1}
+										toggle2={item.toggle2}
+										activeToggle1={item.activeToggle1}
+										activeToggle2={item.activeToggle2}
 									/>
 							  ))
 							: null}
