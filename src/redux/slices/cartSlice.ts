@@ -77,35 +77,35 @@ export const cartSlice = createSlice({
 				state.totalQuantity++;
 			}
 		},
-		decrementProduct: (state, action) => {
+		decrementProduct: (state, action: PayloadAction<CartItem>) => {
 			const sameItem = state.items.find(
 				(item) =>
 					item.id === action.payload.id &&
-					item.activeToggle1 === action.payload.toggle1 &&
-					item.activeToggle2 === action.payload.toggle2,
+					item.activeToggle1 === action.payload.activeToggle1 &&
+					item.activeToggle2 === action.payload.activeToggle2,
 			);
 			if (sameItem && sameItem.count > 1) {
 				sameItem.count--;
 				const extraPrice1 =
 					(action.payload.toggle1.length &&
-						action.payload.toggle1.find((switcher) => switcher.num === action.payload.toggle1)
-							.extraPrice) ||
+						action.payload.toggle1.find((switcher) => switcher.num === action.payload.activeToggle1)
+							?.extraPrice) ||
 					0;
 				const extraPrice2 =
 					(action.payload.toggle2.length &&
-						action.payload.toggle2.find((switcher) => switcher.num === action.payload.toggle2)
-							.extraPrice) ||
+						action.payload.toggle2.find((switcher) => switcher.num === action.payload.activeToggle2)
+							?.extraPrice) ||
 					0;
 				state.totalPrice -= sameItem.price + extraPrice1 + extraPrice2;
 				state.totalQuantity--;
 			}
 		},
-		removeProductFromCart: (state, action) => {
+		removeProductFromCart: (state, action: PayloadAction<CartItem>) => {
 			const sameItem = state.items.find(
 				(item) =>
 					item.id === action.payload.id &&
-					item.activeToggle1 === action.payload.toggle1 &&
-					item.activeToggle2 === action.payload.toggle2,
+					item.activeToggle1 === action.payload.activeToggle1 &&
+					item.activeToggle2 === action.payload.activeToggle2,
 			);
 			if (sameItem) {
 				state.items = state.items.filter(
@@ -118,13 +118,13 @@ export const cartSlice = createSlice({
 				);
 				const extraPrice1 =
 					(action.payload.toggle1.length &&
-						action.payload.toggle1.find((switcher) => switcher.num === action.payload.toggle1)
-							.extraPrice) ||
+						action.payload.toggle1.find((switcher) => switcher.num === action.payload.activeToggle1)
+							?.extraPrice) ||
 					0;
 				const extraPrice2 =
 					(action.payload.toggle2.length &&
-						action.payload.toggle2.find((switcher) => switcher.num === action.payload.toggle2)
-							.extraPrice) ||
+						action.payload.toggle2.find((switcher) => switcher.num === action.payload.activeToggle2)
+							?.extraPrice) ||
 					0;
 				state.totalPrice -= sameItem.count * (sameItem.price + extraPrice1 + extraPrice2);
 				state.totalQuantity -= sameItem.count;

@@ -32,8 +32,8 @@ const Sort: React.FC = () => {
 	};
 
 	useEffect(() => {
-		const closePopupEvent = (event: React.MouseEvent<HTMLBodyElement>) => {
-			if (sortRef.current && !event.nativeEvent.composedPath().includes(sortRef.current)) {
+		const closePopupEvent = (event: Event) => {
+			if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
 				setIsVisibleSort(false);
 			}
 		};
